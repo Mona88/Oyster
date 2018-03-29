@@ -18,10 +18,6 @@ class Oystercard
     balance
   end
 
-  def deduct(amount)
-    @balance -= amount
-  end
-
   def touch_in
     error_mess = "You're broke mate, you need more than #{MIN_FARE}!"
     raise error_mess if balance < MIN_FARE
@@ -30,6 +26,13 @@ class Oystercard
 
   def touch_out
     @in_journey = false
+    deduct(MIN_FARE)
+  end
+
+  private
+
+  def deduct(amount)
+    @balance -= amount
   end
 
 end

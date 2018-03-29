@@ -40,6 +40,10 @@ describe Oystercard do
       subject.touch_out
       expect(subject.in_journey).to eq false
     end
+    it 'to be charged for the complete journey when I touch out' do
+      expect{subject.touch_out}.to change {subject.balance}.by(-Oystercard::MIN_FARE)
+    end
+
   end
 
   it 'is in journey when touch_in' do
