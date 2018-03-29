@@ -26,6 +26,21 @@ describe Oystercard do
     subject.deduct(2.50)
     expect(subject.balance).to eq -2.50
   end
+
+  it 'is in journey when touch_in' do
+    subject.touch_in
+    expect(subject.in_journey).to eq true
+  end
+
+  it 'is not in journey when touch_out' do
+    subject.touch_in
+    subject.touch_out
+    expect(subject.in_journey).to eq false
+  end
+
+  it 'is in journey when touch_in' do
+    expect(subject.in_journey).to eq false
+  end
 end
 
 # describe '#top-up' do
