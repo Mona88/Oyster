@@ -27,20 +27,29 @@ describe Oystercard do
     expect(subject.balance).to eq -2.50
   end
 
-  it 'is in journey when touch_in' do
-    subject.touch_in
-    expect(subject.in_journey).to eq true
+  describe 'tests that require top up and touch in' do
+    before do
+      subject.top_up(5)
+      subject.touch_in
+    end
+    it 'is in journey when touch_in' do
+      expect(subject.in_journey).to eq true
+    end
+
+    it 'is not in journey when touch_out' do
+      subject.touch_out
+      expect(subject.in_journey).to eq false
+    end
   end
 
-  it 'is not in journey when touch_out' do
-    subject.touch_in
-    subject.touch_out
+  it 'is in journey when touch_in' do
     expect(subject.in_journey).to eq false
   end
 
-  it 'is in journey when touch_in' do
-    expect(subject.in_journey).to eq false
+  it 'raises an error if balance is less than minimum fare' do
+    expect{subject.touch_in}.to raise_error "You're broke mate, you need more than #{Oystercard::MIN_FARE}!"
   end
+
 end
 
 # describe '#top-up' do
